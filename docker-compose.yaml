@@ -1,0 +1,22 @@
+version: "2"            # Version used according to Docker Engine release, latest:  -v: 3.7,  -docker-engine: 18.06.0+
+services:
+    #   NodeJS container
+  app:
+    container_name: app
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"       # - "Port used by container:Actual post of localhost"
+    links:
+      - mongo             # Specifying the service the mongo to be hosted on!
+    depends_on:
+      - mongo
+    command: npm start
+    #   MongoDB container
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"     # - "Port to be used by container under 'mongo' host"
+    expose:
+      - 27017
